@@ -112,10 +112,8 @@ int main(int argc, char *argv[])
             //ss = op.getInputValues(0x00); 
             //cout<<"a: "<<int(ss.port)<<" "<<ss.valid<<" "<<ss.calibrated<<" "<<ss.type<<" "<<ss.mode<<" "<<ss.rawValue<<" "<<ss.normalizedValue<<" "<<ss.scaledValue<<" "<<ss.calibratedValue<<endl;
         }*/
-
+        //shuts down the motor
         op.setOutputState(0x01,0,0x00,0x00,0,0x00,0,true,&status);
-        ms = op.getOutputState(0x01);
-        cout<<"port: "<<int(ms.port)<<" power: "<<int(ms.power)<<" mode:"<<int(ms.mode)<<" regMode: "<<int(ms.regMode)<<" turnRatio: "<<int(ms.turnRatio)<<" runState: "<<int(ms.runState)<<" tachoLimit: "<<ms.tachoLimit<<" tachoCount: "<<ms.tachoCount<<" blockTachoCount: "<<ms.blockTachoCount<<" rotationCount: "<<ms.rotationCount<<endl;
         nxt.disconnect();
 
     }catch(NxtEx &ex){
