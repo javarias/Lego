@@ -76,34 +76,32 @@ int main(int argc, char *argv[])
         Opcodes op(&nxt);
         unsigned char status;
         MotorState ms;
-        for (int i=1; i<3; i++){
+        int alti = 0;
+        int az = 0;
+       //for (int i=1; i<10; i++){
            //az 
            //printf ("azimuth:\n");
            //ms  = op.getOutputState(0x00);
            //cout<<"az: "<<int(ms.port)<<" "<<int(ms.power)<<" "<<int(ms.mode)<<" "<<int(ms.regMode)<<" "<<int(ms.turnRatio)<<" "<<int(ms.runState)<<" "<<ms.tachoLimit<<" "<<ms.tachoCount<<" "<<ms.blockTachoCount<<" "<<ms.rotationCount<<endl;
            //SEBA: Working msg for az
            //op.setOutputState(0x00,80,0x01,0x00,50,0x20,(4.667*i),true,&status);
+           op.setOutputState(0x00,80,0x01,0x00,0,0x20,(4.667*az),true,&status);
+           ms = op.getOutputState(0x00);
+           cout<<"port: "<<int(ms.port)<<" power: "<<int(ms.power)<<" mode:"<<int(ms.mode)<<" regMode: "<<int(ms.regMode)<<" turnRatio: "<<int(ms.turnRatio)<<" runState: "<<int(ms.runState)<<" tachoLimit: "<<ms.tachoLimit<<" tachoCount: "<<ms.tachoCount<<" blockTachoCount: "<<ms.blockTachoCount<<" rotationCount: "<<ms.rotationCount<<endl;
 
            //el
+           printf(" angulo %d \n",alti);
+           op.setOutputState(0x01,-80,0x01,0x00,50,0x20,alti/5,true,&status);//con este muevo el motor conectado a B
+           op.setOutputState(0x02,80,0x01,0x00,50,0x20,alti/5,true,&status);//con este muevo el motor conectado a C
            ms = op.getOutputState(0x01);
            cout<<"port: "<<int(ms.port)<<" power: "<<int(ms.power)<<" mode:"<<int(ms.mode)<<" regMode: "<<int(ms.regMode)<<" turnRatio: "<<int(ms.turnRatio)<<" runState: "<<int(ms.runState)<<" tachoLimit: "<<ms.tachoLimit<<" tachoCount: "<<ms.tachoCount<<" blockTachoCount: "<<ms.blockTachoCount<<" rotationCount: "<<ms.rotationCount<<endl;
-           //Initialize az motor
-           //move az
-           op.setOutputState(0x01,80,0x01,0x00,0,0x20,1,true,&status);
-           //op.setOutputState(0x01,80,0x02,0x00,0,0x20,0.1,true,&status);
-           cout<<"WILL MOVE\n";
-           //sleep(1);
-           //op.setOutputState(0x01,-80,0x01,0x00,0,0x20,(i),true,&status);
-           //op.setOutputState(0x01,100,0x01,0x00,50,0x20,(4.667*i),true,&status);
-           //sleep(1);  
-           //op.setOutputState(0x01,100,0x01,0x00,50,0x20,(4.667*i),true,&status);
-        }
-        //op.setOutputState(0x00,50,0x01,0x00,50,0x20,180,true,&status);
+           ms = op.getOutputState(0x02);
+           cout<<"port: "<<int(ms.port)<<" power: "<<int(ms.power)<<" mode:"<<int(ms.mode)<<" regMode: "<<int(ms.regMode)<<" turnRatio: "<<int(ms.turnRatio)<<" runState: "<<int(ms.runState)<<" tachoLimit: "<<ms.tachoLimit<<" tachoCount: "<<ms.tachoCount<<" blockTachoCount: "<<ms.blockTachoCount<<" rotationCount: "<<ms.rotationCount<<endl;
+        //}
         /*op.setInputMode(0x00, LIGHT_ACTIVE, RAWMODE);
         SensorState ss;
         cout<<"Status: "<<(int)status<<endl;
         sleep(1);
-        MotorState ms;
         for(int i=0;i<10;i++){
             sleep(1);
             ms = op.getOutputState(0);
@@ -113,7 +111,9 @@ int main(int argc, char *argv[])
             //cout<<"a: "<<int(ss.port)<<" "<<ss.valid<<" "<<ss.calibrated<<" "<<ss.type<<" "<<ss.mode<<" "<<ss.rawValue<<" "<<ss.normalizedValue<<" "<<ss.scaledValue<<" "<<ss.calibratedValue<<endl;
         }*/
         //shuts down the motor
-        op.setOutputState(0x01,0,0x00,0x00,0,0x00,0,true,&status);
+        //op.setOutputState(0x00,0,0x00,0x00,0,0x00,0,true,&status);
+        //op.setOutputState(0x01,0,0x00,0x00,0,0x00,0,true,&status);
+        //op.setOutputState(0x02,0,0x00,0x00,0,0x00,0,true,&status);
         nxt.disconnect();
 
     }catch(NxtEx &ex){
